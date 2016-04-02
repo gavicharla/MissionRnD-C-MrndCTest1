@@ -31,7 +31,72 @@ Difficulty : Medium
 #include <stdio.h>
 #include <math.h>
 
-int * find_sequences(int *arr, int len){
+int * find_sequences(int *a, int len){
+	if (a == NULL )
+		return NULL;
 	//Return final array which has 6indexes [AP1_S,AP1_E,AP2_S,AP2_E,GP1_S,GP2_E]
-	return NULL;
+	int start1 = -1, end1 = -1;
+	int* diff = (int *)malloc(sizeof(int)* (len - 1));
+	int k = 0;
+	for (int i = 0, j = 1; i < len - 1; i++, j++)
+	{
+		diff[k++] = a[j] - a[i];
+	}
+	int recur_diff = 0, flag = 0;
+	int * final = (int*)malloc(sizeof(int) * 6);
+	for (int i = 0; i < 6; i++)
+		final[i] = -1;
+	for (int i = 0, j = 1; i < k - 1; i++, j++)
+	{
+		if (diff[i] == diff[j])
+		{
+			recur_diff++;
+			end1 = j;
+			if (recur_diff == 1)
+				start1 = i;
+			printf("%d %d\n", diff[i], diff[j]);
+		}
+		else
+		{
+
+			if (start1 != -1)
+			{
+				if (final[0] == -1)
+				{
+					final[0] = end1 - recur_diff;
+					final[1] = final[0] + recur_diff + 1;
+				}
+				else if (final[2] == -1)
+				{
+					final[2] = end1 - recur_diff;
+					final[3] = final[2] + recur_diff + 1;
+				}
+				start1 = -1;
+				end1 = -1;
+				recur_diff = 0;
+			}
+		}
+
+	}
+	if (start1 != -1 && final[2] == -1)
+	{
+		final[2] = end1 - recur_diff;
+		final[3] = final[2] + recur_diff + 1;
+	}
+	recur_diff = 0;
+	start1 = -1;
+	end1 = -1;
+	for (int i = 0, j = 1; i<len - 2; i++, j++)
+	{
+		if ((float)a[j] / a[i] == (float)a[j + 1] / a[j])
+		{
+			if (start1 == -1)
+				start1 = i;
+			end1 = j + 1;
+			recur_diff++;
+		}
+	}
+	final[4] = start1;
+	final[5] = end1;
+	return final;
 }

@@ -27,8 +27,35 @@ struct node{
 	int data;
 	struct node *next;
 };
-
-
+int return_day(int date, int month, int year)
+{
+	return 365 * year + year / 4 - year / 100 + year / 400 + date + (153 * month + 8) / 5;
+}
 int between_days(struct node *date1head, struct node *date2head){
-	return -1;
+	if (date1head ==NULL || date2head == NULL)
+		return -1;
+	int i = 8;
+	int day1 = 0, day2 = 0, mon1 = 0, mon2 = 0, y1 = 0, y2 = 0;
+	while (i--)
+	{
+		if (i >= 6)
+		{
+			day1 = day1 * 10 + date1head->data;
+			day2 = day2 * 10 + date2head->data;
+		}
+		else if (i > 3)
+		{
+			mon1 = mon1 * 10 + date1head->data;
+			mon2 = mon2 * 10 + date2head->data;
+		}
+		else
+		{
+			y1 = y1 * 10 + date1head->data;
+			y2 = y2 * 10 + date2head->data;
+		}
+		date1head = date1head->next;
+
+		date2head = date2head->next;
+	}
+	return return_day(day2, mon2, y2) - return_day(day1, mon1, y1) - 1;
 }
