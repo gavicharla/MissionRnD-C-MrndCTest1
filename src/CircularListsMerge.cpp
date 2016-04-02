@@ -35,8 +35,27 @@ struct node{
 
 int merge_circularlists(struct node ** head3, struct node ** head4)
 {
+	if (*head3 == NULL || *head4 == NULL)
+		return -1;
 	struct node *temp2 = NULL, *temp1 = NULL, *temp = NULL,*head1 = (*head3),*head2 =(*head4);
-	int ch,i=0;
+	temp = head1;
+	int i = 0;
+	while (temp->next != head1)
+	{
+		i++;
+		temp = temp->next; 
+	}
+	i++;
+	temp->next = NULL;
+	temp = head2;
+	while (temp->next != head2)
+	{
+		i++;
+		temp = temp->next;
+	}
+	i++;
+	temp->next = NULL;
+	int ch;
 	if (head2 == NULL)
 		return -1;
 	temp = head2;
@@ -47,7 +66,6 @@ int merge_circularlists(struct node ** head3, struct node ** head4)
 		{
 			temp1 = temp;
 			temp = temp->next;
-			i++;
 			if (temp == NULL)
 				break;
 		}
@@ -59,6 +77,13 @@ int merge_circularlists(struct node ** head3, struct node ** head4)
 			head2 = head1;
 		head1 = temp2;
 	}
+	temp = head2;
+	while (temp->next!= NULL)
+	{
+		temp = temp->next;
+	}
+	temp->next = head2;
+	*head3 = head2;
 	return i;
 }
 
