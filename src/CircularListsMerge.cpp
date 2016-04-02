@@ -33,7 +33,7 @@ struct node{
 	struct node *next;
 };
 
-int merge_sorted_sll(struct node ** head3, struct node ** head4)
+int merge_circularlists(struct node ** head3, struct node ** head4)
 {
 	struct node *temp2 = NULL, *temp1 = NULL, *temp = NULL,*head1 = (*head3),*head2 =(*head4);
 	int ch,i=0;
@@ -62,8 +62,3 @@ int merge_sorted_sll(struct node ** head3, struct node ** head4)
 	return i;
 }
 
-
-int merge_circularlists(struct node **head1, struct node **head2){
-	//Returns Length of merged Sorted circular SLL and also points *head1 to final SLL .
-	return -1;
-}
